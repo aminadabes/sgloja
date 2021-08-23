@@ -115,7 +115,7 @@ required="true"
 requiredMessage="O campo Fornecedor é obrigatório." 
 >
 <f:selectItem itemValue="" itemLabel="Selecione um Fornecedor" />
-<f:selectItems value="#{MBProduto.comboFornecedores}"
+<f:selectItems value="#{MBProduto.comboFornecedor}"
 var="item"
 itemValue="#{item.codigo}"
 itemLabel="#{item.descricao}"
@@ -201,7 +201,7 @@ requiredMessage="O campo Fornecedor é obrigatório."
 >
 
 
-<f:selectItems value="#{MBProduto.comboFornecedores}"
+<f:selectItems value="#{MBProduto.comboFornecedor}"
 var="item"
 itemValue="#{item.codigo}"
 itemLabel="#{item.descricao}"

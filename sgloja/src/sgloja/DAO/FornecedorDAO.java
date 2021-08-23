@@ -13,8 +13,8 @@ public class FornecedorDAO {
 	public void salvar(Fornecedor f) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO fornecedores ");
-		sql.append("(descricao) ");
-		sql.append("VALUES (?)");
+		sql.append("(descricao, contato_id) ");
+		sql.append("VALUES (?, ?)");
 
 		Connection conexao = ConexaoFactory.conectar();
 
@@ -57,7 +57,7 @@ public class FornecedorDAO {
 	
 	public Fornecedor buscaPorCodigo(Fornecedor f)throws SQLException{
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT codigo, descricao ");
+		sql.append("SELECT codigo, descricao, contato_id ");
 		sql.append("FROM fornecedores ");
 		sql.append("WHERE codigo = ? ");
 		
@@ -84,7 +84,7 @@ public class FornecedorDAO {
 	public ArrayList<Fornecedor>buscarPorDescricao(Fornecedor f)throws SQLException{
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT codigo, descricao ");
+		sql.append("SELECT codigo, descricao, contato_id ");
 		sql.append("FROM fornecedores ");
 		sql.append("WHERE descricao LIKE ? ");
 		sql.append("ORDER BY descricao ASC ");
@@ -104,6 +104,7 @@ public class FornecedorDAO {
 			Fornecedor item = new Fornecedor();
 			item.setCodigo(resultado.getLong("codigo"));
 			item.setDescricao(resultado.getString("descricao"));
+			
 			
 			lista.add(item);
 		}
@@ -139,26 +140,26 @@ public class FornecedorDAO {
 	}
 	
    
-	public static void main(String[] args) {
-		
-		
-		 Fornecedor f1 = new Fornecedor();
-		f1.setDescricao("ROBERTO");
-		
-		Fornecedor f2 = new Fornecedor();
-		f2.setDescricao("VALDIR");
-		
-		FornecedorDAO fdao = new FornecedorDAO();
-		
-		try {
-			fdao.salvar(f1);
-			fdao.salvar(f2);
-			System.out.println("Salvo com sucesso!!");
-			
-		} catch (SQLException e) {
-			System.out.println("Erro ao salvar");
-			e.printStackTrace();
-		}   
+//	public static void main(String[] args) {
+//		
+//		
+//		 Fornecedor f1 = new Fornecedor();
+//		f1.setDescricao("ROBERTO");
+//		
+//		Fornecedor f2 = new Fornecedor();
+//		f2.setDescricao("VALDIR");
+//		
+//		FornecedorDAO fdao = new FornecedorDAO();
+//		
+//		try {
+//			fdao.salvar(f1);
+//			fdao.salvar(f2);
+//			System.out.println("Salvo com sucesso!!");
+//			
+//		} catch (SQLException e) {
+//			System.out.println("Erro ao salvar");
+//			e.printStackTrace();
+//		}   
 		
 		
 	/*	Fornecedores f1 = new Fornecedores();
@@ -254,5 +255,5 @@ public class FornecedorDAO {
 				e.printStackTrace();
 			}  */ 
 			
-	}
+	//}
 }

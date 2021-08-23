@@ -14,12 +14,12 @@ import sgloja.util.JSFUtil;
 @ManagedBean(name = "MBFornecedores")
 @ViewScoped
 public class FornecedorBean {
-	
+
 	private Fornecedor fornecedor;
-	private ArrayList<Fornecedor>itens;
-	private ArrayList<Fornecedor>itensFiltrados;
-	
-public Fornecedor getFornecedor() {
+	private ArrayList<Fornecedor> itens;
+	private ArrayList<Fornecedor> itensFiltrados;
+
+	public Fornecedor getFornecedor() {
 		return fornecedor;
 	}
 
@@ -27,101 +27,84 @@ public Fornecedor getFornecedor() {
 		this.fornecedor = fornecedor;
 	}
 
-
 	public ArrayList<Fornecedor> getItens() {
 		return itens;
 	}
-	
+
 	public void setItens(ArrayList<Fornecedor> itens) {
 		this.itens = itens;
 	}
-	
-	
+
 	public ArrayList<Fornecedor> getItensFiltrados() {
 		return itensFiltrados;
 	}
-	
+
 	public void setItensFiltrados(ArrayList<Fornecedor> itensFiltrados) {
 		this.itensFiltrados = itensFiltrados;
 	}
 
+	@PostConstruct
+	public void prepararPesquisa() {
 
+		try {
+			FornecedorDAO fdao = new FornecedorDAO();
+			itens = fdao.listar();
 
-@PostConstruct
-public void prepararPesquisa(){
-	
-	
-	try {
-		FornecedorDAO fdao = new FornecedorDAO();
-		itens = fdao.listar();
-		
-	} catch (SQLException e) {
-		JSFUtil.adicionarMensagemErro("ex.getMessage()");
-		e.printStackTrace();
+		} catch (SQLException e) {
+			JSFUtil.adicionarMensagemErro("ex.getMessage()");
+			e.printStackTrace();
+		}
+
 	}
-	
-}
 
-public void prepararNovo(){
-	fornecedor = new Fornecedor();
-}
-
-public void novo(){
-	
-	try {
-		FornecedorDAO fdao = new FornecedorDAO();
-		fdao.salvar(fornecedor);
-		
-		
-		itens = fdao.listar();
-		
-		
-		JSFUtil.adicionarMensagemSucesso("Fornecedor salvo com sucesso!");
-		
-	} catch (SQLException e) {
-		JSFUtil.adicionarMensagemErro("ex.getMessage()");
-		e.printStackTrace();
+	public void prepararNovo() {
+		fornecedor = new Fornecedor();
 	}
-}
 
+	public void novo() {
 
+		try {
+			FornecedorDAO fdao = new FornecedorDAO();
+			fdao.salvar(fornecedor);
 
-public void excluir(){
-	try {
-		FornecedorDAO fdao = new FornecedorDAO();
-		fdao.excluir(fornecedor);
-		
-		
-		itens = fdao.listar();
-		
-		
-		JSFUtil.adicionarMensagemSucesso("Fornecedor excluido com sucesso!");
-		
-	} catch (SQLException e) {
-		JSFUtil.adicionarMensagemErro("Não é possível excluir um fornecedor que tenha um produto associado!");
-		e.printStackTrace();
+			itens = fdao.listar();
+
+			JSFUtil.adicionarMensagemSucesso("Fornecedor salvo com sucesso!");
+
+		} catch (SQLException e) {
+			JSFUtil.adicionarMensagemErro("ex.getMessage()");
+			e.printStackTrace();
+		}
 	}
-}
 
+	public void excluir() {
+		try {
+			FornecedorDAO fdao = new FornecedorDAO();
+			fdao.excluir(fornecedor);
 
+			itens = fdao.listar();
 
+			JSFUtil.adicionarMensagemSucesso("Fornecedor excluido com sucesso!");
 
-
-public void editar(){
-	try {
-		FornecedorDAO fdao = new FornecedorDAO();
-		fdao.editar(fornecedor);
-		
-		
-		itens = fdao.listar();
-		
-		
-		JSFUtil.adicionarMensagemSucesso("Fornecedor editado com sucesso!");
-		
-	} catch (SQLException e) {
-		JSFUtil.adicionarMensagemErro("ex.getMessage()");
-		e.printStackTrace();
+		} catch (SQLException e) {
+			JSFUtil.adicionarMensagemErro("Não é possível excluir um fornecedor que tenha um produto associado!");
+			e.printStackTrace();
+		}
 	}
-}
+
+	public void editar() {
+		try {
+			FornecedorDAO fdao = new FornecedorDAO();
+			fdao.editar(fornecedor);
+
+			itens = fdao.listar();
+
+			JSFUtil.adicionarMensagemSucesso("Fornecedor editado com sucesso!");
+
+		} catch (SQLException e) {
+			JSFUtil.adicionarMensagemErro("ex.getMessage()");
+			e.printStackTrace();
+		}
+	}
 
 }

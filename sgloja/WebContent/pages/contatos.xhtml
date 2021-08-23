@@ -36,7 +36,7 @@ rows="7"
         <h:outputText value="#{item.nome}" />
     </p:column>
     
-    <p:column headerText="Email" sortBy=""#{item.email}"" filterBy=""#{item.email}"">
+    <p:column headerText="Email" sortBy="#{item.email}" filterBy="#{item.email}">
         <h:outputText value="#{item.email}" />
     </p:column>
     
@@ -72,10 +72,22 @@ appendTo="@(body)"
 >
 <h:form id="frmforNovo">
 <h:panelGrid id="pnforNovo" columns="2">
-<p:outputLabel value="Descrição:" for="txtDescNovo" />
-<h:inputText size="30" maxlength="50" id="txtDescNovo"
+
+<p:outputLabel value="Nome:"  />
+<h:inputText size="30" maxlength="50" 
 value="#{MBContatos.contato.nome}" required="true"
 requiredMessage="O campo nome é obrigatório." />
+
+<p:outputLabel value="Email:"  />
+<h:inputText size="30" maxlength="50" 
+value="#{MBContatos.contato.email}" required="true"
+requiredMessage="O campo email é obrigatório." />
+
+<p:outputLabel value="Telefone:"  />
+<h:inputText size="30" maxlength="50" 
+value="#{MBContatos.contato.telefone}" required="true"
+requiredMessage="O campo telefone é obrigatório." />
+
 </h:panelGrid>
 <h:panelGrid columns="2">
 <p:commandButton value="Gravar" actionListener="#{MBContatos.novo}" 
@@ -139,10 +151,10 @@ requiredMessage="O campo Nome é obrigatório." />
 
 
 <h:outputText value="Email" for="txtEdtfor" />
-<h:inputText value="#{MBContatos.contato.email}"
+<h:inputText value="#{MBContatos.contato.email}" />
 
 <h:outputText value="Telefone" for="txtEdtfor" />
-<h:inputText value="#{MBContatos.contato.telefone}"  
+<h:inputText value="#{MBContatos.contato.telefone}"/> 
 </h:panelGrid>
 
 <h:panelGrid columns="2">

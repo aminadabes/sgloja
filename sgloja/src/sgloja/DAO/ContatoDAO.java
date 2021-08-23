@@ -13,13 +13,16 @@ public class ContatoDAO {
 	public void salvar(Contato f) throws SQLException {
 		StringBuilder sql = new StringBuilder();
 		sql.append("INSERT INTO contato ");
-		sql.append("(nome) ");
-		sql.append("VALUES (?)");
+		sql.append("(nome, email, telefone) ");
+		sql.append("VALUES (?,?,?)");
 
 		Connection conexao = ConexaoFactory.conectar();
 
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
 		comando.setString(1, f.getNome());
+		comando.setString(2, f.getEmail());
+		comando.setString(3, f.getTelefone());
+		
 		comando.executeUpdate();
 
 	}
@@ -41,7 +44,7 @@ public class ContatoDAO {
 	public void editar (Contato f) throws SQLException{
 		StringBuilder sql = new StringBuilder();
 		sql.append("UPDATE contato ");
-		sql.append("SET nome = ? ");
+		sql.append("SET nome = ? ,  email = ?,  telefone = ? ");
 		sql.append("WHERE id = ? ");
 		
 		Connection conexao = ConexaoFactory.conectar();
@@ -49,7 +52,9 @@ public class ContatoDAO {
 		PreparedStatement comando = conexao.prepareStatement(sql.toString());
 		
 		comando.setString(1, f.getNome());
-		comando.setLong(2, f.getId());
+		comando.setString(2, f.getEmail());
+		comando.setString(3, f.getTelefone());
+		comando.setLong(4, f.getId());
 		comando.executeUpdate();
 		
 	}
@@ -57,7 +62,7 @@ public class ContatoDAO {
 	
 	public Contato buscaPorCodigo(Contato f)throws SQLException{
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT id, nome ");
+		sql.append("SELECT id, nome, email, telefone  ");
 		sql.append("FROM contato ");
 		sql.append("WHERE id = ? ");
 		
@@ -75,6 +80,8 @@ public class ContatoDAO {
 			retorno = new Contato();
 			retorno.setId(resultado.getLong("id"));
 			retorno.setNome(resultado.getString("nome"));
+			retorno.setEmail(resultado.getString("email"));
+			retorno.setTelefone(resultado.getString("telefone"));
 		}
 		
 		return retorno;
@@ -84,7 +91,7 @@ public class ContatoDAO {
 	public ArrayList<Contato>buscarPorDescricao(Contato f)throws SQLException{
 		
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT id, nome ");
+		sql.append("SELECT id, nome, email, telefone  ");
 		sql.append("FROM contato ");
 		sql.append("WHERE nome LIKE ? ");
 		sql.append("ORDER BY nome ASC ");
@@ -104,6 +111,8 @@ public class ContatoDAO {
 			Contato item = new Contato();
 			item.setId(resultado.getLong("id"));
 			item.setNome(resultado.getString("nome"));
+			item.setEmail(resultado.getString("email"));
+			item.setTelefone(resultado.getString("telefone"));
 			
 			lista.add(item);
 		}
@@ -114,7 +123,7 @@ public class ContatoDAO {
 	
 	public ArrayList<Contato> listar()throws SQLException{
 		StringBuilder sql = new StringBuilder();
-		sql.append("SELECT id, nome ");
+		sql.append("SELECT id, nome, email, telefone ");
 		sql.append("FROM contato ");
 		sql.append("ORDER BY nome ASC ");
 		
@@ -131,6 +140,8 @@ public class ContatoDAO {
 			Contato f = new Contato();
 			f.setId(resultado.getLong("id"));
 			f.setNome(resultado.getString("nome"));
+			f.setEmail(resultado.getString("email"));
+			f.setTelefone(resultado.getString("telefone"));
 			
 			lista.add(f);
 		}
@@ -139,27 +150,27 @@ public class ContatoDAO {
 	}
 	
    
-	public static void main(String[] args) {
-		
-		
-		Contato f1 = new Contato();
-		f1.setNome("ROBERTO");
-		
-		Contato f2 = new Contato();
-		f2.setNome("VALDIR");
-		
-		ContatoDAO fdao = new ContatoDAO();
-		
-		try {
-			fdao.salvar(f1);
-			fdao.salvar(f2);
-			System.out.println("Salvo com sucesso!!");
-			
-		} catch (SQLException e) {
-			System.out.println("Erro ao salvar");
-			e.printStackTrace();
-		}   
-		
+//	public static void main(String[] args) {
+//		
+//		
+//		Contato f1 = new Contato();
+//		f1.setNome("ROBERTO");
+//		
+//		Contato f2 = new Contato();
+//		f2.setNome("VALDIR");
+//		
+//		ContatoDAO fdao = new ContatoDAO();
+//		
+//		try {
+//			fdao.salvar(f1);
+//			fdao.salvar(f2);
+//			System.out.println("Salvo com sucesso!!");
+//			
+//		} catch (SQLException e) {
+//			System.out.println("Erro ao salvar");
+//			e.printStackTrace();
+//		}   
+//}
 		
 	/*	Fornecedores f1 = new Fornecedores();
 		f1.setCodigo(3L);
@@ -254,5 +265,5 @@ public class ContatoDAO {
 				e.printStackTrace();
 			}  */ 
 			
-	}
+	
 }
